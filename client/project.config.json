@@ -9,8 +9,8 @@
 		"newFeature": true,
 		"enhance": true
 	},
-	"appid": "",
-	"projectname": "",
+	"appid": "wx5572f670cefe1e2c",
+	"projectname": "岂不美哉的天气预报",
 	"libVersion": "2.8.1",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
