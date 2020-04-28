@@ -1,3 +1,3 @@
 module.exports = {
-    testData: 1
+  testData: 1
 }
