@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/weather/index",
     "pages/index/index",
     "pages/logs/logs"
   ],

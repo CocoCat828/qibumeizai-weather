@@ -1,0 +1,44 @@
+const WEEK_NAME = ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'];
+
+module.exports = {
+  // 湿度处理
+  humidity(h) {
+    if (h) return '湿度' + h + '%';
+    return h
+  },
+  //根据风的 code 和风力输出文案
+  wind(code, level) {
+    if (!code) return '无风';
+    if (level) {
+      level = level.toString().split('-');
+      level = level[level.length - 1];
+      return `${code} ${level}级`
+    }
+    return code;
+  },
+  //风力处理
+  windLevel(level) {
+    if (level === '1-2') {
+      return '微风';
+    } else {
+      return level + '级';
+    }
+  },
+  // 格式化周的日期
+  formatWeeklyDate(i) {
+    let now = getDate();
+    let names = ['今天', '明天', '后天'];
+    if (names[i]) {
+      return names[i];
+    }
+    let curWeek = now.getDay() - 1 + i;
+    return WEEK_NAME[curWeek];
+  },
+  // 格式化日期
+  formatDate(ts) {
+    let date = getDate(ts);
+    let month = ('00' + (date.getMnth() + 1)).slice(-2);
+    let day = ('00' + date.getDate()).slice(-2);
+    return month + '/' + day;
+  }
+}
