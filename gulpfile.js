@@ -109,11 +109,15 @@ function jsTask() {
         trigger: 'dev'
       })
     )
+    .pipe(isProd ? through.obj() : sourcemaps.init())
     .pipe(
       isProd ?
       terser() :
       through.obj()
     )
+    .on('error', function (err) {
+      console.log(err);
+    })
     .pipe(isProd ? through.obj() : sourcemaps.write('./'))
     .pipe(gulp.dest(dist));
 }

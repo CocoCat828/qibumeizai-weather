@@ -1,3 +1,9 @@
 {
-    "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "beautify.config": {
+    "brace_style": "none,preserve-inline",
+    "indent_size": 2,
+    "indent_char": " "
+  }
 }

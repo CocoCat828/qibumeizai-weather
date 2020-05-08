@@ -1,22 +1,23 @@
 <wxs src="./index.wxs" module="utils"></wxs>
-<view class="wrapper" style="background: url({{backgroundImage}}) {{backgroundColor}};">
+<!-- <view class="wrapper" style="background: url({{backgroundImage}}) {{backgroundColor}};"> -->
+<view class="wrapper" style="background: red">
   <!-- 导航 -->
   <view class="navigator" bindtap="goDiary">
     <icon type="edit"></icon>
   </view>
   <view class="container" id="canvas-wrapper" style="padding-top: {{paddingTop}}px">
     <!-- 天气粒子效果 -->
-    <canvas canvas-id="effect" id="effect"></canvas>
+    <!-- <canvas canvas-id="effect" id="effect"></canvas> -->
+    <!-- 当前实时天气和空气质量 -->
     <view class="now">
-      <!-- 当前实时天气和空气质量 -->
-      <view class="location" bindtap="chosseLocation">
+      <view class="location" bindtap="chooseLocation">
         <icon type="dingwei"></icon>
         <text>{{address}}</text>
       </view>
-      <view class="air-quality" wx:if="{{air.aqi}}">
+      <!-- <view class="air-quality" wx:if="{{air.aqi}}">
         <text class="circle" style="background: {{air.color}}"></text>
         <text class="value">{{air.name}} {{air.aqi}}</text>
-      </view>
+      </view> -->
       <view class="now-weather">
         <view class="temp">
           <text>{{current.temp}}</text>
@@ -29,16 +30,16 @@
           <text>{{current.weather}}</text>
         </view>
         <view class="inline today">
-          <view class="item">{{utlis.humidity(current.humidity)}}</view>
-          <view class="item">{{utlis.wind(current.wind, current.windLevel)}}</view>
+          <text class="item">{{utils.humidity(current.humidity)}}</text>
+          <text class="item">{{utils.wind(current.wind, current.windLevel)}}</text>
         </view>
       </view>
       <view class="tips" wx:if="{{tips}}">
         <text>{{tips}}</text>
       </view>
     </view>
-    <view class="two-days">
-      <!-- 今明两天天气 -->
+    <!-- 今明两天天气 -->
+    <!-- <view class="two-days">
       <view class="item">
         <view class="top">
           <text class="date">今天</text>
@@ -59,11 +60,11 @@
           <icon type="{{today.icon}}" class="logo"></icon>
         </view>
       </view>
-    </view>
+    </view> -->
   </view>
-  <view class="weather" style="background-color: {{backgroundColor}};">
+  <!-- <view class="weather" style="background-color: {{backgroundColor}};">
+    24小时天气
     <view class="container">
-      <!-- 24小时天气 -->
       <scroll-view scroll-x class="hourly">
         <view class="scrollX">
           <view class="item" wx:for="{{hourlyData}}">
@@ -76,7 +77,7 @@
     </view>
     <view class="container">
       <view class="week">
-        <!-- 七天天气 -->
+        七天天气
         <view class="week-weather">
           <view class="item" wx:for="{{weeklyData}}">
             <view class="day">{{utils.fornatWeeklyData(index)}}</view>
@@ -101,7 +102,7 @@
     </view>
     <view class="container">
       <view class="life-style">
-        <!-- 生活指数 -->
+        生活指数
         <view class="item" wx:for="{{lifeStyle}}" data-name="{{item.name}}" data-detail="{{item.datail}}">
           <view class="title">
             <icon type="{{item.icon}}"></icon>
@@ -111,7 +112,7 @@
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
   <view class="source">
     <text wx:if="{{oneWord === ''}}">· 如果没有阳光，就在心里点一只蜡烛 ·</text>
     <text wx:else>{{oneWord}}</text>

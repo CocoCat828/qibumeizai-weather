@@ -1,10 +1,9 @@
 const path = require('path');
 const express = require('express');
-const {
-  PORT
-} = require('../config.server.json');
+const { PORT } = require('../config.server.json');
 
-const test = require('./cloudfunction/test/').main
+const test = require('./cloudfunction/test/').main;
+const heWeather = require('./cloudfunction/he-weather').main;
 
 const app = express();
 
@@ -15,6 +14,16 @@ app.get('/api/test', (req, res) => {
     .then(res.json.bind(res))
     .catch((err) => {
       console.log(err);
+    });
+});
+
+app.get('/api/he-weather', (req, res, next) => {
+  // 将 req.query 传入
+  heWeather(req.query)
+    .then(res.json.bind(res))
+    .catch((err) => {
+      console.log(err);
+      res.status(err.status).send(err.msg);
     });
 });
 

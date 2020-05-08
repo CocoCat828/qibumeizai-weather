@@ -1,13 +1,11 @@
 //index.js
 
 /*<remove trigger="prod">*/
-import {
-  test
-} from '../../libs/api-mock'
+import { heWeather, test } from '../../libs/api-mock'
 /*</remove>*/
 
 /*<jdists trigger="prod">
-import {test} from '../../libs/api
+import {heWeather, test} from '../../libs/api';
 </jdists>*/
 
 //获取应用实例
@@ -64,8 +62,8 @@ Page({
   },
   callFunction() {
     test({
-        a: 1,
-        b: 6
+        lat: '116.40',
+        lon: '39.9'
       })
       .then(res => {
         console.log(res);

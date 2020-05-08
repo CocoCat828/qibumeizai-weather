@@ -1,4 +1,4 @@
-const QQ_MAP_KEY = 'N3EBZ-EVP3K-S34JD-ACOIE-CF4IQ-KUFP6'
+const QQ_MAP_KEY = 'N3EBZ-EVP3K-S34JD-ACOIE-CF4IQ-KUFP6';
 
 wx.cloud.init({
   env: 'test-k3x06'
@@ -17,12 +17,12 @@ export const geocoder = (lat, lon, success = () => {}, fail = () => {}) => {
   });
 }
 
-export const test = () => {
+export const getWeather = (lat, lon) => {
   return wx.cloud.callFunction({
-    name: 'test',
+    name: 'he-weather',
     data: {
-      a: 1,
-      b: 3
+      lat,
+      lon
     }
   });
 };
