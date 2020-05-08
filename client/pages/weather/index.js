@@ -1,10 +1,10 @@
 /*<remove trigger="prod">*/
 import { geocoder } from '../../libs/api';
-import { getWeather } from '../../libs/api-mock';
+import { getWeather, getAir } from '../../libs/api-mock';
 /*</remove>*/
 
 /*<jdists trigger="prod">
-import { geocoder, getWeather } from '../../libs/api';
+import { geocoder, getWeather, getAir } from '../../libs/api';
 </jdists>*/
 
 Page({
@@ -150,24 +150,25 @@ Page({
         duration: 3000
       });
     }
-    const {
-      lat,
-      lon
-    } = this.data;
+    const { lat, lon, city } = this.data;
     getWeather(lat, lon)
-      .then((data) => {
-        // console.log(data);
-        let {
-          current,
-          oneWord
-        } = data.result;
+      .then(res => {
+        // console.log(res);
+        let { current, oneWord } = res.result;
         wx.hideLoading();
         if (typeof cb === 'function') cb();
         this.setData({
           current,
           oneWord
         });
-      }).catch(fail);
+      })
+      .catch(fail);
+    // 获取空气质量
+    getAir(city)
+      .then(res => {
+        console.log(res);
+        this.setData({ air: res.result })
+      })
   },
 
   onLoad() {

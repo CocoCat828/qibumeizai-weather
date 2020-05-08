@@ -17,9 +17,21 @@ export const geocoder = (lat, lon, success = () => {}, fail = () => {}) => {
   });
 }
 
+// 获取实时天气
 export const getWeather = (lat, lon) => {
   return wx.cloud.callFunction({
     name: 'he-weather',
+    data: {
+      lat,
+      lon
+    }
+  });
+};
+
+// 获取实时空气质量
+export const getAir = (city) => {
+  return wx.cloud.callFunction({
+    name: 'he-air',
     data: {
       lat,
       lon
