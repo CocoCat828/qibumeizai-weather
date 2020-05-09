@@ -7,6 +7,8 @@ import { getWeather, getAir } from '../../libs/api-mock';
 import { geocoder, getWeather, getAir } from '../../libs/api';
 </jdists>*/
 
+let isUpdate = false;
+
 Page({
   data: {
     width: 375,
@@ -18,6 +20,16 @@ Page({
       weather: '数据获取中',
       humidity: '1',
       icon: 'xiaolian'
+    },
+    today: {
+      temp: 0,
+      weather: '',
+      icon: ''
+    },
+    tomorrow: {
+      temp: 0,
+      weather: '',
+      icon: ''
     },
     oneWord: '',
     lat: 40.058090,
@@ -152,23 +164,41 @@ Page({
     }
     const { lat, lon, city } = this.data;
     getWeather(lat, lon)
-      .then(res => {
-        // console.log(res);
-        let { current, oneWord } = res.result;
-        wx.hideLoading();
-        if (typeof cb === 'function') cb();
-        this.setData({
-          current,
-          oneWord
-        });
-      })
+      .then(this.render)
       .catch(fail);
     // 获取空气质量
     getAir(city)
       .then(res => {
-        console.log(res);
+        // console.log(res);
         this.setData({ air: res.result })
       })
+  },
+
+  // 渲染页面
+  render(res) {
+    isUpdate = true;
+    console.log(res);
+    let { current, daily, oneWord } = res.result;
+    let { backgroundColor } = current;
+    let today = {
+      temp: `${daily[0].minTemp}/${daily[0].maxTemp}`,
+      icon: daily[0].dayIcon,
+      weather: daily[0].day
+    }
+    let tomorrow = {
+      temp: `${daily[1].minTemp}/${daily[1].maxTemp}`,
+      icon: daily[1].dayIcon,
+      weather: daily[1].day
+    }
+    wx.hideLoading();
+    if (typeof cb === 'function') cb();
+    this.setData({
+      backgroundColor,
+      current,
+      today,
+      tomorrow,
+      oneWord
+    });
   },
 
   onLoad() {

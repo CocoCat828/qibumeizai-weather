@@ -151,6 +151,34 @@ function getOneWord() {
   return list[index] ? list[index] : list[0];
 }
 
+// 获取天气状况别名
+function getWeartherName(code) {
+  code = parseInt(code);
+  let name = 'rain';
+  if (code === 100 || (code >= 200 && code <= 204)) {
+    name = 'clear'
+  } else if (code > 100 && code <= 103) {
+    name = 'cloud'
+  } else if (code === 104 || (code >= 205 && code <= 208)) {
+    name = 'overcast'
+  } else if (code >= 302 && code <= 304) {
+    name = 'thunder'
+  } else if (code >= 400 && code < 500) {
+    name = 'snow'
+  } else if ((code >= 511 && code <= 513) || code === 502) {
+    name = 'smog'
+  } else if (code === 501 || (code >= 514 && code <= 515) || (code >= 509 && code <= 510)) {
+    // 雾气
+    name = 'smog'
+  } else if (code >= 503 && code < 508) {
+    // 扬沙
+    name = 'smog'
+  } else if (code >= 900) {
+    name = 'clear'
+  }
+  return name
+}
+
 // 初始化当前天气信息
 function initCurrentData(data, _data) {
   let {
@@ -166,8 +194,11 @@ function initCurrentData(data, _data) {
     ss
   } = _data.daily_forecast[0];
   let hours = new Date().getUTCHours() + 8;
+  hours = hours > 24 ? hours - 24 : hours;
   let isNight = $._isNight(hours, sr, ss);
+  let name = getWeartherName(cond_code);
   return {
+    backgroundColor: getBackgroundColor(name, isNight ? 'night' : 'day'),
     temp: tmp,
     humidity: hum,
     wind: wind_dir,
@@ -175,6 +206,49 @@ function initCurrentData(data, _data) {
     weather: cond_txt,
     icon: getIconNameByCode(cond_code, isNight)
   }
+}
+
+// 初始化一周的每日天气数据
+function initDailyData(data) {
+  let weekly = [];
+  data.forEach(i => {
+    weekly.push({
+      day: i.cond_txt_d,
+      dayIcon: getIconNameByCode(i.cond_code_d),
+      dayWind: i.wind_dir,
+      dayWindLevel: i.wind_sc,
+      maxTemp: i.tmp_max,
+      minTemp: i.tmp_min,
+      night: i.cond_txt_n,
+      nightIcon: getIconNameByCode(i.cond_code_n, true),
+      nightWind: i.wind_dit,
+      nightWindLevel: i.wind_sc,
+      time: new Date(i.date).getTime()
+    });
+  });
+  return weekly;
+}
+
+// 获取背景颜色
+function getBackgroundColor(name, night = 'day') {
+  name = `${night}_${name}`;
+  const map = {
+    day_cloud: '62aadc',
+    night_cloud: '27446f',
+    day_rain: '2f4484',
+    night_rain: '284469',
+    day_thunder: '3a4482',
+    night_thunder: '2a2b5a',
+    day_clear: '57b9e2',
+    night_clear: '173868',
+    day_overcast: '5c7a93',
+    night_overcast: '22364d',
+    day_snow: '95d1ed',
+    night_snow: '7a98bc',
+    night_smog: '494d57'
+  };
+  let color = map[name] ? map[name] : '27446f';
+  return `#${color}`;
 }
 
 exports.main = async (event) => {
@@ -195,7 +269,8 @@ exports.main = async (event) => {
       return {
         status: 0,
         oneWord: getOneWord(),
-        current: initCurrentData(now, result)
+        current: initCurrentData(now, result),
+        daily: initDailyData(daily_forecast)
       }
     } else {
       return Promise.reject({
