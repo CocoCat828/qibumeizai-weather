@@ -7,7 +7,7 @@
   </view>
   <view class="container" id="canvas-wrapper" style="padding-top: {{paddingTop}}px">
     <!-- 天气粒子效果 -->
-    <!-- <canvas canvas-id="effect" id="effect"></canvas> -->
+    <canvas canvas-id="effect" id="effect"></canvas>
     <!-- 当前实时天气和空气质量 -->
     <view class="now">
       <view class="location" bindtap="chooseLocation">
@@ -34,8 +34,12 @@
           <text class="item">{{utils.wind(current.wind, current.windLevel)}}</text>
         </view>
       </view>
-      <view class="tips" wx:if="{{tips}}">
+      <!-- 心情文字 -->
+      <!-- <view class="tips" wx:if="{{tips}}">
         <text>{{tips}}</text>
+      </view> -->
+      <view class="tips">
+        <text>心情文字</text>
       </view>
     </view>
     <!-- 今明两天天气 -->
@@ -62,8 +66,8 @@
       </view>
     </view>
   </view>
-  <!-- <view class="weather" style="background-color: {{backgroundColor}};">
-    24小时天气
+  <view class="weather" style="background-color: {{backgroundColor}};">
+    <!-- 24小时天气 -->
     <view class="container">
       <scroll-view scroll-x class="hourly">
         <view class="scrollX">
@@ -77,8 +81,8 @@
     </view>
     <view class="container">
       <view class="week">
-        七天天气
-        <view class="week-weather">
+        <!-- 七天天气 -->
+        <!-- <view class="week-weather">
           <view class="item" wx:for="{{weeklyData}}">
             <view class="day">{{utils.fornatWeeklyData(index)}}</view>
             <view class="date">{{utils.formatDate(item.item)}}</view>
@@ -94,25 +98,25 @@
             <view class="wind" wx:if="{{item.nightWind}}">{{utils.windLevel(item.nightWindLevel)}}</view>
             <view class="wind" wx:else></view>
           </view>
-        </view>
-        <view class="week-chart">
+        </view> -->
+        <!-- <view class="week-chart">
           <canvas canvas-id="chart" id="chart"></canvas>
-        </view>
+        </view> -->
       </view>
     </view>
     <view class="container">
       <view class="life-style">
-        生活指数
-        <view class="item" wx:for="{{lifeStyle}}" data-name="{{item.name}}" data-detail="{{item.datail}}">
+        <!-- 生活指数 -->
+        <!-- <view class="item" wx:for="{{lifeStyle}}" data-name="{{item.name}}" data-detail="{{item.datail}}">
           <view class="title">
             <icon type="{{item.icon}}"></icon>
             {{item.name}}
           </view>
           <view class="content">{{item.info}}</view>
-        </view>
+        </view> -->
       </view>
     </view>
-  </view> -->
+  </view>
   <view class="source">
     <text wx:if="{{oneWord === ''}}">· 如果没有阳光，就在心里点一只蜡烛 ·</text>
     <text wx:else>{{oneWord}}</text>

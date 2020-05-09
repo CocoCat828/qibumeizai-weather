@@ -229,6 +229,24 @@ function initDailyData(data) {
   return weekly;
 }
 
+// 初始化24小时天气数据
+function initHourly(data, _data) {
+  let hourly = [];
+  let { sr, ss } = _data.daily_forecast[0];
+  data.forEach(i => {
+    let time = i.time;
+    let hours = time.slice(11, 13);
+    let isNight = $._isNight(hours, sr, ss);
+    hourly.push({
+      temp: i.tmp,
+      time: hours + ':00',
+      weather: i.cond_txt,
+      icon: getIconNameByCode(i.cond_code, isNight)
+    });
+  })
+  return hourly;
+}
+
 // 获取背景颜色
 function getBackgroundColor(name, night = 'day') {
   name = `${night}_${name}`;
@@ -270,7 +288,8 @@ exports.main = async (event) => {
         status: 0,
         oneWord: getOneWord(),
         current: initCurrentData(now, result),
-        daily: initDailyData(daily_forecast)
+        daily: initDailyData(daily_forecast),
+        hourly: initHourly(hourly, result)
       }
     } else {
       return Promise.reject({

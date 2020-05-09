@@ -31,6 +31,7 @@ Page({
       weather: '',
       icon: ''
     },
+    hourlyData: [],
     oneWord: '',
     lat: 40.058090,
     lon: 116.312336,
@@ -178,7 +179,7 @@ Page({
   render(res) {
     isUpdate = true;
     console.log(res);
-    let { current, daily, oneWord } = res.result;
+    let { current, daily, hourly, oneWord } = res.result;
     let { backgroundColor } = current;
     let today = {
       temp: `${daily[0].minTemp}/${daily[0].maxTemp}`,
@@ -197,6 +198,7 @@ Page({
       current,
       today,
       tomorrow,
+      hourlyData: hourly,
       oneWord
     });
   },

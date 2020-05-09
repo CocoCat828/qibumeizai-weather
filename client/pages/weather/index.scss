@@ -110,12 +110,13 @@ $grid-margin: 20px;
     }
 
     .now-weather {
-      position: absolute;
-      top: 60%;
-      left: 0;
+      // position: absolute;
+      // top: 60%;
+      // left: 0;
+      margin-top: 90rpx;
       width: 100%;
       text-align: center;
-      transform: translateY(-50%);
+      // transform: translateY(-50%);
       line-height: 1;
     }
 
@@ -173,6 +174,11 @@ $grid-margin: 20px;
           }
         }
       }
+    }
+
+    .tips {
+      line-height: 1;
+      text-align: center;
     }
   }
 
