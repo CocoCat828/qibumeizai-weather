@@ -82,38 +82,40 @@
     <view class="container">
       <view class="week">
         <!-- 七天天气 -->
-        <!-- <view class="week-weather">
+        <view class="week-weather">
           <view class="item" wx:for="{{weeklyData}}">
-            <view class="day">{{utils.fornatWeeklyData(index)}}</view>
-            <view class="date">{{utils.formatDate(item.item)}}</view>
+            <view class="day">{{utils.formatWeeklyDate(index)}}</view>
+            <view class="date">{{utils.formatDate(item.time)}}</view>
             <view class="daytime">
               <view class="wt">{{item.day}}</view>
               <icon type="{{item.dayIcon}}" class="img"></icon>
             </view>
             <view class="night">
-              <view class="wt"></view>
+              <view class="wt">{{item.night}}</view>
               <icon type="{{item.nightIcon}}" class="img"></icon>
             </view>
             <view class="wind">{{utils.wind(item.nightWind)}}</view>
-            <view class="wind" wx:if="{{item.nightWind}}">{{utils.windLevel(item.nightWindLevel)}}</view>
+            <view class="wind" wx:if="{{item.nightWind}}">
+              {{utils.windLevel(item.nightWindLevel)}}
+            </view>
             <view class="wind" wx:else></view>
           </view>
-        </view> -->
-        <!-- <view class="week-chart">
-          <canvas canvas-id="chart" id="chart"></canvas>
-        </view> -->
+        </view>
+        <view class="week-chart">
+          <ec-canvas id="week-chart" canvas-id="mychart-bar" ec="{{weekChart}}"></ec-canvas>
+        </view>
       </view>
     </view>
     <view class="container">
       <view class="life-style">
         <!-- 生活指数 -->
-        <!-- <view class="item" wx:for="{{lifeStyle}}" data-name="{{item.name}}" data-detail="{{item.datail}}">
+        <view class="item" wx:for="{{lifestyle}}" data-name="{{item.name}}" data-detail="{{item.datail}}">
           <view class="title">
             <icon type="{{item.icon}}"></icon>
             {{item.name}}
           </view>
           <view class="content">{{item.info}}</view>
-        </view> -->
+        </view>
       </view>
     </view>
   </view>

@@ -1,6 +1,7 @@
 {
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "icon": "../../components/icon/index"
+    "icon": "../../components/icon/index",
+    "ec-canvas": "../../components/ec-canvas/ec-canvas"
   }
 }

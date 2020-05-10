@@ -211,19 +211,19 @@ function initCurrentData(data, _data) {
 // 初始化一周的每日天气数据
 function initDailyData(data) {
   let weekly = [];
-  data.forEach(i => {
+  data.forEach(v => {
     weekly.push({
-      day: i.cond_txt_d,
-      dayIcon: getIconNameByCode(i.cond_code_d),
-      dayWind: i.wind_dir,
-      dayWindLevel: i.wind_sc,
-      maxTemp: i.tmp_max,
-      minTemp: i.tmp_min,
-      night: i.cond_txt_n,
-      nightIcon: getIconNameByCode(i.cond_code_n, true),
-      nightWind: i.wind_dit,
-      nightWindLevel: i.wind_sc,
-      time: new Date(i.date).getTime()
+      day: v.cond_txt_d,
+      dayIcon: getIconNameByCode(v.cond_code_d),
+      dayWind: v.wind_dir,
+      dayWindLevel: v.wind_sc,
+      maxTemp: v.tmp_max,
+      minTemp: v.tmp_min,
+      night: v.cond_txt_n,
+      nightIcon: getIconNameByCode(v.cond_code_n, true),
+      nightWind: v.wind_dir,
+      nightWindLevel: v.wind_sc,
+      time: new Date(v.date).getTime()
     });
   });
   return weekly;
@@ -233,18 +233,68 @@ function initDailyData(data) {
 function initHourly(data, _data) {
   let hourly = [];
   let { sr, ss } = _data.daily_forecast[0];
-  data.forEach(i => {
-    let time = i.time;
+  data.forEach(v => {
+    let time = v.time;
     let hours = time.slice(11, 13);
     let isNight = $._isNight(hours, sr, ss);
     hourly.push({
-      temp: i.tmp,
+      temp: v.tmp,
       time: hours + ':00',
-      weather: i.cond_txt,
-      icon: getIconNameByCode(i.cond_code, isNight)
+      weather: v.cond_txt,
+      icon: getIconNameByCode(v.cond_code, isNight)
     });
   })
   return hourly;
+}
+
+// 初始化生活指数数据
+function initLifestyle(data) {
+  let arr = [];
+  const map = {
+    cw: {
+      icon: 'xichezhishu',
+      name: '洗车'
+    },
+    sport: {
+      icon: 'yundongzhishu',
+      name: '运动'
+    },
+    flu: {
+      icon: 'ganmao',
+      name: '感冒'
+    },
+    uv: {
+      icon: 'ziwaixian',
+      name: '紫外线强度'
+    },
+    drsg: {
+      icon: 'liangshai',
+      name: '穿衣'
+    },
+    air: {
+      icon: 'beikouzhao',
+      name: '污染扩散'
+    },
+
+    trav: {
+      icon: 'fangshai',
+      name: '旅游'
+    },
+    comf: {
+      icon: 'guominzhishu',
+      name: '舒适度'
+    }
+  };
+  data.forEach(v => {
+    let t = map[v.type];
+    arr.push({
+      name: t.name,
+      icon: t.icon,
+      info: v.brf,
+      detail: v.txt
+    })
+  });
+  return arr;
 }
 
 // 获取背景颜色
@@ -276,8 +326,8 @@ exports.main = async (event) => {
   // 生成签名
   params.sign = $.generateSignature(params);
   let query = []
-  for (let i in params) {
-    query.push(`${i}=${encodeURIComponent(params[i])}`);
+  for (let v in params) {
+    query.push(`${v}=${encodeURIComponent(params[v])}`);
   }
   let url = API_URL + '?' + query.join('&');
   return $.http(url).then(data => {
@@ -289,7 +339,8 @@ exports.main = async (event) => {
         oneWord: getOneWord(),
         current: initCurrentData(now, result),
         daily: initDailyData(daily_forecast),
-        hourly: initHourly(hourly, result)
+        hourly: initHourly(hourly, result),
+        lifestyle: initLifestyle(lifestyle)
       }
     } else {
       return Promise.reject({

@@ -311,17 +311,17 @@ $grid-margin: 20px;
           font-size: 24rpx;
         }
 
+        .wt,
+        .night {
+          margin: 32rpx 0 30rpx;
+        }
+
         .wt {
           margin-bottom: 30rpx;
         }
 
         .night {
           margin-top: 272rpx;
-        }
-
-        .wt,
-        .night {
-          margin: 32rpx 0 30rpx;
         }
 
         icon.img {
@@ -334,15 +334,15 @@ $grid-margin: 20px;
 
     .week-chart {
       position: absolute;
-      top: 262rpx;
+      top: 212rpx;
       left: 0;
       right: 0;
-      height: 272rpx;
+      height: 372rpx;
     }
 
-    .week-chart canvas {
+    .week-chart ec-canvas {
       width: 750rpx;
-      height: 272rpx;
+      height: 372rpx;
     }
   }
 
@@ -352,8 +352,8 @@ $grid-margin: 20px;
     flex-wrap: wrap;
 
     .item {
-      box-sizing: wrap;
-      float: left;
+      box-sizing: border-box;
+      padding: 50rpx 0 0;
       width: 25%;
       height: 188rpx;
       text-align: center;

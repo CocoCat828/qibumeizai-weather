@@ -2,12 +2,12 @@ var WEEK_NAME = ['周一', '周二', '周三', '周四', '周五', '周六', '�
 
 module.exports = {
   // 湿度处理
-  humidity: function (h) {
+  humidity: function(h) {
     if (h) return '湿度 ' + h + '%';
     return h
   },
   //根据风的 code 和风力输出文案
-  wind: function (code, level) {
+  wind: function(code, level) {
     if (!code) return '无风';
     if (level) {
       level = level.toString().split('-');
@@ -17,7 +17,7 @@ module.exports = {
     return code;
   },
   //风力处理
-  windLevel: function (level) {
+  windLevel: function(level) {
     if (level === '1-2') {
       return '微风';
     } else {
@@ -25,20 +25,20 @@ module.exports = {
     }
   },
   // 格式化周的日期
-  formatWeeklyDate: function (i) {
-    let now = getDate();
-    let names = ['今天', '明天', '后天'];
+  formatWeeklyDate: function(i) {
+    var now = getDate();
+    var names = ['今天', '明天', '后天'];
     if (names[i]) {
       return names[i];
     }
-    let curWeek = now.getDay() - 1 + i;
+    var curWeek = now.getDay() - 1 + i;
     return WEEK_NAME[curWeek];
   },
   // 格式化日期
-  formatDate: function (ts) {
-    let date = getDate(ts);
-    let month = ('00' + (date.getMnth() + 1)).slice(-2);
-    let day = ('00' + date.getDate()).slice(-2);
+  formatDate: function(ts) {
+    var date = getDate(ts);
+    var month = ('00' + (date.getMonth() + 1)).slice(-2);
+    var day = ('00' + date.getDate()).slice(-2);
     return month + '/' + day;
   }
 }

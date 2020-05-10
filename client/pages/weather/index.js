@@ -1,3 +1,5 @@
+import * as echarts from '../../components/ec-canvas/echarts';
+
 /*<remove trigger="prod">*/
 import { geocoder } from '../../libs/api';
 import { getWeather, getAir } from '../../libs/api-mock';
@@ -11,6 +13,9 @@ let isUpdate = false;
 
 Page({
   data: {
+    weekChart: {
+      lazyLoad: true
+    },
     width: 375,
     scale: 1,
     backgroundImage: '../../images/cloud.jpg',
@@ -32,6 +37,8 @@ Page({
       icon: ''
     },
     hourlyData: [],
+    weeklyData: [],
+    lifestyle: [],
     oneWord: '',
     lat: 40.058090,
     lon: 116.312336,
@@ -175,11 +182,66 @@ Page({
       })
   },
 
+  // 初始化7天天气预报温度折线图
+  initChart() {
+    const { weeklyData } = this.data;
+    const ecComponent = this.selectComponent('#week-chart');
+    let maxTempArr = [];
+    let minTempArr = [];
+    weeklyData.forEach(v => {
+      maxTempArr.push(v.maxTemp);
+      minTempArr.push(v.minTemp);
+    });
+    ecComponent.init((canvas, width, height, dpr) => {
+      const chart = echarts.init(canvas, null, {
+        width: width,
+        height: height,
+        devicePixelRatio: dpr
+      });
+      canvas.setChart(chart);
+
+      let option = {
+        xAxis: {
+          show: false,
+          type: 'category',
+          boundaryGap: false
+        },
+        yAxis: {
+          show: false,
+          type: 'value',
+          max: 'dataMax',
+          min: 'dataMin'
+        },
+        series: [
+        {
+          type: 'line',
+          data: maxTempArr,
+          label: {
+            show: true,
+            formatter: '{c}°'
+          }
+        },
+        {
+          type: 'line',
+          data: minTempArr,
+          label: {
+            show: true,
+            position: 'bottom',
+            formatter: '{c}°'
+          }
+        }],
+        color: ['#FFB14B', '#46CAF7']
+      };
+      chart.setOption(option);
+      return chart;
+    })
+  },
+
   // 渲染页面
   render(res) {
     isUpdate = true;
     console.log(res);
-    let { current, daily, hourly, oneWord } = res.result;
+    let { current, daily, hourly, lifestyle, oneWord } = res.result;
     let { backgroundColor } = current;
     let today = {
       temp: `${daily[0].minTemp}/${daily[0].maxTemp}`,
@@ -199,8 +261,11 @@ Page({
       today,
       tomorrow,
       hourlyData: hourly,
+      weeklyData: daily,
+      lifestyle,
       oneWord
     });
+    this.initChart();
   },
 
   onLoad() {
