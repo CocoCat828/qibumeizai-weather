@@ -2,6 +2,88 @@
   padding: 30rpx;
 }
 
-.container {
-  padding: 0 20rpx;
+.navigator {
+  padding: 64rpx 20rpx 20rpx;
+
+  icon {
+    font-size: 32rpx;
+    color: #333;
+  }
+}
+
+button,
+.button {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14rpx;
+  padding-right: 14rpx;
+  line-height: 2.55555556;
+  overflow: hidden;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #1aad19;
+  color: #fff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  &:active {
+    background-color: #179b16;
+    color: rgba(255, 255, 255, .6);
+  }
+}
+
+.publish {
+  padding: 0 15rpx;
+
+  .title {
+    height: 64rpx;
+    line-height: 64rpx;
+    font-size: 28rpx;
+    text-align: center;
+  }
+}
+
+.colors {
+  display: flex;
+  margin-bottom: 40rpx;
+
+  .mood {
+    padding: 10rpx;
+    width: 20%;
+  }
+
+  .mood view {
+    position: relative;
+    margin: 0 auto;
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+
+    .emoji {
+      margin: 12rpx;
+      font-size: 68rpx;
+      text-align: center;
+      color: #000;
+    }
+  }
+
+  .mood view .checked {
+    position: relative;
+    right: -4rpx;
+    top: -4rpx;
+    font-size: 42rpx;
+    color: #09bb07;
+  }
+
+  .todayMood {
+    margin: 0 auto;
+  }
+}
+
+.auth-button {
+  padding: 40rpx;
 }

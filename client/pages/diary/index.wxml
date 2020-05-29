@@ -1,3 +1,33 @@
+<view class="navigator">
+  <icon type="back" bindtap="goBack" />
+</view>
 <view class="calendar">
-  <calendar></calendar>
+  <calendar weeks-type="cn" next="{{false}}" prev="{{false}}" />
+</view>
+<view class="auth-button">
+  <button open-type="getUserInfo">使用该功能需要授权登录</button>
+</view>
+<view>
+  <view class="publish">
+    <view class="title">
+      <text>XXX，你今天的心情是</text>
+    </view>
+    <view class="colors">
+      <view class="todayMood mood">
+        <view>
+          <icon class="emoji" />
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="publish">
+    <view class="title">
+      <text>XXX，你今天是什么心情？</text>
+    </view>
+    <view class="colors" wx:for="{{emotions}}" wx:key="item">
+      <view data-emotion="{{item}}"></view>
+      <view data-emotion="{{item}}"></view>
+    </view>
+  </view>
+  <button>提交心情</button>
 </view>
