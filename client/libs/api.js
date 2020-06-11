@@ -15,7 +15,7 @@ export const geocoder = (lat, lon, success = () => {}, fail = () => {}) => {
     success,
     fail
   });
-}
+};
 
 // 获取实时天气
 export const getWeather = (lat, lon) => {
@@ -32,9 +32,6 @@ export const getWeather = (lat, lon) => {
 export const getAir = (city) => {
   return wx.cloud.callFunction({
     name: 'he-air',
-    data: {
-      lat,
-      lon
-    }
+    data: { city }
   });
 };

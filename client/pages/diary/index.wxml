@@ -2,31 +2,36 @@
   <icon type="back" bindtap="goBack" />
 </view>
 <view class="calendar">
-  <calendar weeks-type="cn" next="{{false}}" prev="{{false}}" />
+  <calendar weeks-type="cn" days-color="{{daysStyle}}" next="{{false}}" prev="{{false}}" />
 </view>
-<view class="auth-button">
+<view wx:if="{{auth===0}}" class="auth-button">
   <button open-type="getUserInfo">使用该功能需要授权登录</button>
 </view>
-<view>
-  <view class="publish">
+<view wx:if="{{showPublish}}">
+  <view class="publish" wx:if="{{todayEmotion}}">
     <view class="title">
-      <text>XXX，你今天的心情是</text>
+      <text>{{nickname}}，你今天的心情是</text>
     </view>
     <view class="colors">
       <view class="todayMood mood">
         <view>
-          <icon class="emoji" />
+          <icon class="emoji" type="{{todayEmotion}}" />
         </view>
       </view>
     </view>
   </view>
-  <view class="publish">
+  <view class="publish" wx:if="{{!todayEmotion && lastMonth === curMonth}}">
     <view class="title">
-      <text>XXX，你今天是什么心情？</text>
+      <text>{{nickname}}，你今天是什么心情？</text>
     </view>
     <view class="colors" wx:for="{{emotions}}" wx:key="item">
-      <view data-emotion="{{item}}"></view>
-      <view data-emotion="{{item}}"></view>
+      <view bindtap="checkedColor" data-emotion="{{item}}" wx:if="{{item === avtiveEmotion}}">
+        <icon type="{{item}}" class="emoji" />
+        <icon class="checked" type="checked2" />
+      </view>
+      <view bindtap="checkedColor" data-emotion="{{item}}" wx:else>
+        <icon type="{{item}}" class="emoji" />
+      </view>
     </view>
   </view>
   <button>提交心情</button>

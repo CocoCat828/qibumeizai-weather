@@ -2,9 +2,11 @@
 <!-- <view class="wrapper" style="background: url({{backgroundImage}}) {{backgroundColor}};"> -->
 <view class="wrapper" style="background: {{backgroundColor}}">
   <!-- 导航 -->
-  <view class="navigator" bindtap="goDiary">
+  <!-- 心情签到 start -->
+  <!-- <view class="navigator" bindtap="goDiary">
     <icon type="edit"></icon>
-  </view>
+  </view> -->
+  <!-- 心情签到 end -->
   <view class="container" id="canvas-wrapper" style="padding-top: {{paddingTop}}px">
     <!-- 天气粒子效果 -->
     <canvas canvas-id="effect" id="effect"></canvas>
@@ -38,9 +40,6 @@
       <!-- <view class="tips" wx:if="{{tips}}">
         <text>{{tips}}</text>
       </view> -->
-      <view class="tips">
-        <text>心情文字</text>
-      </view>
     </view>
     <!-- 今明两天天气 -->
     <view class="two-days">
